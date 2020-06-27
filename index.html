@@ -18,9 +18,16 @@
 </head>
 
 <body>
+    
+    <div id="test">
+    </div>
+            <div class="col-9" id="row">
+                <img id="img" width="75%">
+            </div>
+       
     <div class="container-fluid mt-5">
         <div class="row ml-5 mb-3">
-             <span class="h1 p-4" style="border: 3px solid #6c757d; border-radius:50px">RohaMithran</span>
+            <span class="h1 p-4" style="border: 3px solid #6c757d; border-radius:50px">RohaMithran</span>
         </div>
 
         <div class="row justify-content-center">
@@ -28,19 +35,42 @@
                 <img src="./src/mainimg.JPG" width="100% ">
             </div>
         </div>
-        <div class="row bg-secondary justify-content-center">
-            <div class="col-3 m-5">
-                <img src="./src/img1.JPG" alt="img1" style="width:100%">
-            </div>
-            <div class="col-3 m-5">
-                <img src="./src/img1.JPG" alt="img6" style="width:100%">
-            </div>
-            <div class="col-3 m-5">
-                <img src="./src/img1.JPG" alt="img6" style="width:100%">
-            </div>
-
+        <div class="row bg-secondary justify-content-center mt-3 mb-3 pb-3 pt-4" id="img-container">
         </div>
     </div>
+
+    <script>
+        (function (jq) {
+            function constructImageElement() {
+                let imgPathArray = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg', 'img5.jpg', 'img6.jpg', 'img7.jpg', 'img8.jpg', 'img9.jpg'];
+                let imageEelements = '';
+                imgPathArray.forEach(element => {
+                    imageEelements += `<div class="col-4 pb-4 class="img-wrapper">
+                               <img src="./src/${element}" alt="${element}" style="width:100%">
+                               </div>`.trim();
+                });
+                return imageEelements;
+            }
+            let imageEelements = constructImageElement();
+            let imgContainer = '#img-container';
+            jq(imgContainer).append(imageEelements);
+
+            let imgElement = `#img-container img`;
+            jq(imgElement).on('click', function(event, index) {
+                event.stopPropagation();
+                jq('#test').addClass('display-block')
+                let src = $(this).attr('src');
+                jq('body #row #img').attr('src', src);
+                $('body #row').addClass('display-block');  
+            });
+            jq("#test").on('click', function(event) {
+                event.stopPropagation();
+               jq(this).removeClass('display-block');
+               $('body #row').removeClass('display-block');
+            });
+        })(jQuery);
+
+    </script>
 </body>
 
 </html>
